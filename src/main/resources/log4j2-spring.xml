@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--monitorinterval配置文件变化监听（1天），有变化自动重新加载-->
+<configuration status="ALL" monitorinterval="86400">
+    <Properties>
+        <property name="log.name">mambike-dealer</property>
+        <property name="log.path" value="D:/mnt/xvdc/${hostName}"/>
+        <!--<property name="log.path" >logs</property>  打印到logs目录-->
+        <!--%highlight{}支持高亮显示-->
+        <property name="log.pattern">%highlight{%d{yyyy-MM-dd HH:mm:ss} [%t] %c(line-%L) - %m%n}</property>
+        <!--日志审计-->
+        <property name="patternLayout">[${log.name}][%d{yyyy-MM-dd HH:mm:ss}][%-0p]%msg%n</property>
+    </Properties>
+    <appenders>
+        <Console name="ConsoleAppender" target="SYSTEM_OUT">
+            <PatternLayout pattern="${log.pattern}"/>
+        </Console>
+        <RollingFile name="dealer-appender"
+                     fileName="${log.path}/${log.name}.log"
+                     filePattern="${log.path}/$${date:yyyy-MM}/${log.name}-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout pattern="${log.pattern}"/>
+            <!--每个日志文件的大小，达到size后自动打包-->
+            <SizeBasedTriggeringPolicy size="500 MB"/>
+            <!--每天最多有多少个压缩包，超过该值，自动删除当天最早的压缩包-->
+            <DefaultRolloverStrategy max="100">
+                <!--日志删除策略，自动删除30天前的日志-->
+                <Delete basePath="${log.path}" maxDepth="2">
+                    <IfFileName glob="*/*.log" />
+                    <IfLastModified age="100d" />
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+        <!--日志审计log单独打印-->
+        <RollingFile name="importDataLog" fileName="${log.path}/${log.name}-audit.log"
+                     filePattern="${log.path}/$${date:yyyy-MM}/${log.name}-audit-%d{yyyy-MM-dd}-%i.log.gz" append="true">
+            <PatternLayout pattern="${patternLayout}"/>
+            <!--每个日志文件的大小，达到size后自动打包-->
+            <SizeBasedTriggeringPolicy size="500 MB"/>
+            <!--每天最多有多少个压缩包，超过该值，自动删除当天最早的压缩包-->
+            <DefaultRolloverStrategy max="1000">
+                <!--日志删除策略，自动删除7天前的日志-->
+                <Delete basePath="${log.path}" maxDepth="2">
+                    <IfFileName glob="*/*.log.gz"/>
+                    <IfLastModified age="7d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+    </appenders>
+
+    <loggers>
+        <logger name="com.mambike.dealer.*"  additivity = "true">
+            <appender-ref ref="dealer-appender"/>
+        </logger>
+        <!--<logger name="com.baomidou.mybatisplus.*" level="info" additivity = "true">-->
+            <!--<appender-ref ref="mybatisplus"/>-->
+        <!--</logger>-->
+        <root level="info">
+            <!--<appender-ref ref="mybatisplus"/>-->
+            <appender-ref ref="ConsoleAppender"/>
+            <appender-ref ref="dealer-appender"/>
+        </root>
+    </loggers>
+</configuration>
