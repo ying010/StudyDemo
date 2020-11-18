@@ -1,4 +1,4 @@
-package com.wzy.example.demo.aop;
+package com.wzy.study.aop;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;

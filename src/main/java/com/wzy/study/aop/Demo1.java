@@ -1,7 +1,7 @@
-package com.wzy.example.demo;
+package com.wzy.study.aop;
 
-import com.wzy.example.demo.aop.TestMethod;
-import com.wzy.example.demo.aop.TestMethodInterceptor;
+import com.wzy.study.aop.TestMethod;
+import com.wzy.study.aop.TestMethodInterceptor;
 import org.springframework.aop.Advisor;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
@@ -9,7 +9,6 @@ import org.springframework.aop.support.JdkRegexpMethodPointcut;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
 
 public class Demo1 {
     public static void main(String[] args) throws ExecutionException, InterruptedException {

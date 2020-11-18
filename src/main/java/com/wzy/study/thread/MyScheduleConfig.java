@@ -1,4 +1,4 @@
-package com.wzy.example.demo;
+package com.wzy.study.thread;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;

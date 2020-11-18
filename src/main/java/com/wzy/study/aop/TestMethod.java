@@ -1,4 +1,4 @@
-package com.wzy.example.demo.aop;
+package com.wzy.study.aop;
 
 public class TestMethod {
 
