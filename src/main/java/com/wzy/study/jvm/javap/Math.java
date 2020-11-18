@@ -1,4 +1,4 @@
-package com.wzy.study.jvm;
+package com.wzy.study.jvm.javap;
 
 public class Math {
     private int a1;

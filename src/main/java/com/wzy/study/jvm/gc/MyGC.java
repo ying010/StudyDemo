@@ -1,4 +1,4 @@
-package com.wzy.study.jvm;
+package com.wzy.study.jvm.gc;
 
 import java.util.ArrayList;
 import java.util.List;

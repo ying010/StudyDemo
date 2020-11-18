@@ -1,4 +1,4 @@
-package com.wzy.study.jvm;
+package com.wzy.study.jvm.classloader;
 
 import java.net.URL;
 import java.net.URLClassLoader;
