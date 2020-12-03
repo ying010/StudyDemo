@@ -39,19 +39,4 @@ public class StabilityObject implements Comparable<StabilityObject> {
         }
         return 0;
     }
-
-    /**
-     * 获取一个给定长度的数组
-     * @param size 数组长度
-     * @return
-     */
-    public static StabilityObject[] getTestArray(int size) {
-        StabilityObject[] data = new StabilityObject[size];
-        for (int i = 0; i < size; i++) {
-            int random = new Random().nextInt(10);
-            StabilityObject t = new StabilityObject(random, i);
-            data[i] = t;
-        }
-        return data;
-    }
 }

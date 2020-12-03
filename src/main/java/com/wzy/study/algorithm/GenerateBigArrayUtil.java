@@ -1,11 +1,13 @@
 package com.wzy.study.algorithm;
 
-import com.alibaba.fastjson.JSON;
 import com.wzy.study.algorithm.model.StabilityObject;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Test;
 
 import java.io.*;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 /**
  * 大数组生成工具
@@ -38,7 +40,7 @@ public class GenerateBigArrayUtil {
     }
 
     /**
-     * 获取随机数组存入文件
+     * 获取一个有重复元素的随机数组存入文件
      *
      * @param count
      */
@@ -57,6 +59,21 @@ public class GenerateBigArrayUtil {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 获取一个可检测稳定性的数组
+     * @param size 数组长度
+     * @return
+     */
+    public static StabilityObject[] getStableArray(int size) {
+        StabilityObject[] data = new StabilityObject[size];
+        for (int i = 0; i < size; i++) {
+            int random = new Random().nextInt(10);
+            StabilityObject t = new StabilityObject(random, i);
+            data[i] = t;
+        }
+        return data;
     }
 
     /**
@@ -85,6 +102,28 @@ public class GenerateBigArrayUtil {
     }
 
     /**
+     * 使用工厂模式获取各个排序算法
+     * @param sortName
+     * @return
+     */
+    public static Sort getSortFactory(String sortName) {
+        switch (sortName) {
+            case "选择":
+                return new MySortAlgorithm.Xuanze();
+            case "冒泡":
+                return new MySortAlgorithm.Maopao();
+            case "插入":
+                return new MySortAlgorithm.Charu();
+            case "归并":
+                return new MySortAlgorithm.Guibing();
+            case "快速":
+                return new MySortAlgorithm.Kuaisu();
+            default:
+                throw new RuntimeException("算法名输入错误");
+        }
+    }
+
+    /**
      * 判断数组是否有序
      * @param target
      * @param <T>
@@ -99,41 +138,19 @@ public class GenerateBigArrayUtil {
         return true;
     }
 
-    public static void main(String[] args) throws Exception {
-//        getArray(10000 * 10);
-//        Integer[] array = readArray();
-//        charu(array);
-//        maopao(array);
-//        Collections.sort(array);
-//        System.err.println(line(array, 36194523));
-//        System.err.println(binarySearch(array, 36194523));
-//        maopao(array);
-//        maopao(array);
-
-//        StabilityObject[] data = StabilityObject.getTestArray();
-//        log.info("排序前数组：{}", JSON.toJSONString(data));
-//        inMethod(1);
-//        charu(data);
-//        log.info("插入排序后数组：{}", JSON.toJSONString(data));
-//        methodToMethod(3);
-
-//        StabilityObject[] data = StabilityObject.getTestArray(10);
-//        log.info("排序前数组：{}", JSON.toJSONString(data));
-//        log.info("排序前是否有序{}", checkOrder(data));
-//        inMethod(1);
-//        new MySortAlgorithm.Xuanze().sort(data);
-//        log.info("选择排序后数组：{}", JSON.toJSONString(data));
-//        log.info("选择排序后是否有序{}", checkOrder(data));
-//        methodToMethod(1);
-
-        StabilityObject[] data = StabilityObject.getTestArray(10);
-        log.info("排序前数组：{}", JSON.toJSONString(data));
-        log.info("排序前是否有序{}", checkOrder(data));
-        inMethod(1);
-        new MySortAlgorithm.Kuaisu().sort(data);
-        log.info("快速排序后数组：{}", JSON.toJSONString(data));
-        log.info("快速排序后是否有序{}", checkOrder(data));
-        methodToMethod(1);
+    /**
+     * 检测数组排序的稳定性
+     * 大小相同的元素排序前后相对位置不变是稳定，相对改变是不稳定
+     * @param target
+     * @return
+     */
+    public static boolean checkStability(StabilityObject[] target) {
+        for (int i = 0; i < target.length - 1; i++) {
+            if (target[i].compareTo(target[i + 1]) == 0 && target[i].getOrder() > target[i + 1].getOrder()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -144,7 +161,7 @@ public class GenerateBigArrayUtil {
      * @param target
      * @return
      */
-    public static int binarySearch(int[] source, int target) {
+    public static int binarySearch(Integer[] source, int target) {
         int low = 0, high = source.length - 1;
         long t1 = System.currentTimeMillis();
         int a = -1;
@@ -172,7 +189,7 @@ public class GenerateBigArrayUtil {
      * @param target
      * @return
      */
-    public static int line(int[] source, int target) {
+    public static int line(Integer[] source, int target) {
         long t1 = System.currentTimeMillis();
         int a = -1;
         for (int i = 0; i < source.length; i++) {
@@ -185,15 +202,54 @@ public class GenerateBigArrayUtil {
         return a;
     }
 
-    public static void methodToMethod(int count) {
-        for (int i = 0; i < count; i++) {
-            log.info("********************************************");
+    /**
+     * 获取随机数组存入文件
+     */
+    @Test
+    public void getArray() {
+        GenerateBigArrayUtil.getArray(10000 * 1000);
+    }
+
+    @Test
+    public void main() throws Exception {
+        Integer[] array = readArray();
+        new MySortAlgorithm.Guibing().sort(array);
+        System.err.println(line(array, 36194523));
+        System.err.println(binarySearch(array, 36194523));
+    }
+
+    /**
+     * 比较算法稳定性
+     * @throws Exception
+     */
+    @Test
+    public void compareSortStable() throws Exception {
+        List<String> methods = Arrays.asList("选择", "冒泡", "插入", "归并", "快速");
+        StabilityObject[] array;
+        for (String methodName : methods) {
+            array = getStableArray(100);
+            log.info("{}排序前是否稳定{}", methodName, checkStability(array));
+            GenerateBigArrayUtil.getSortFactory(methodName).sort(array);
+            log.info("{}排序后是否稳定{}", methodName, checkStability(array));
+            log.info("----------------------------------");
+            Thread.sleep(1000);
         }
     }
 
-    public static void inMethod(int count) {
-        for (int i = 0; i < count; i++) {
-            log.info("---------------------------------------");
+    /**
+     * 比较各算法运行时间
+     * @throws Exception
+     */
+    @Test
+    public void compareSortTime() throws Exception {
+        List<String> methods = Arrays.asList("选择", "冒泡", "插入", "归并", "快速");
+        Integer[] array;
+        for (String methodName : methods) {
+            array = readArray();
+            log.info("{}排序前是否有序{}", methodName, checkOrder(array));
+            GenerateBigArrayUtil.getSortFactory(methodName).sort(array);
+            log.info("{}排序后是否有序{}", methodName, checkOrder(array));
+            log.info("----------------------------------");
         }
     }
 }
