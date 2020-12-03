@@ -118,6 +118,8 @@ public class GenerateBigArrayUtil {
                 return new MySortAlgorithm.Guibing();
             case "快速":
                 return new MySortAlgorithm.Kuaisu();
+            case "快速优化1":
+                return new MySortAlgorithm.Kuaisu1();
             default:
                 throw new RuntimeException("算法名输入错误");
         }
@@ -207,7 +209,7 @@ public class GenerateBigArrayUtil {
      */
     @Test
     public void getArray() {
-        GenerateBigArrayUtil.getArray(10000 * 1000);
+        GenerateBigArrayUtil.getArray(10000 * 10);
     }
 
     @Test
@@ -242,10 +244,28 @@ public class GenerateBigArrayUtil {
      */
     @Test
     public void compareSortTime() throws Exception {
-        List<String> methods = Arrays.asList("选择", "冒泡", "插入", "归并", "快速");
+        List<String> methods = Arrays.asList("选择", "冒泡", "插入", "归并", "快速", "快速优化1");
         Integer[] array;
         for (String methodName : methods) {
             array = readArray();
+            log.info("{}排序前是否有序{}", methodName, checkOrder(array));
+            GenerateBigArrayUtil.getSortFactory(methodName).sort(array);
+            log.info("{}排序后是否有序{}", methodName, checkOrder(array));
+            log.info("----------------------------------");
+        }
+    }
+
+    /**
+     * 对已排序数组比较各算法运行时间
+     * @throws Exception
+     */
+    @Test
+    public void compareSortTimeForSorted() throws Exception {
+        List<String> methods = Arrays.asList("选择", "冒泡", "插入", "归并", "快速", "快速优化1");
+        Integer[] array;
+        array = readArray();
+        GenerateBigArrayUtil.getSortFactory("归并").sort(array);
+        for (String methodName : methods) {
             log.info("{}排序前是否有序{}", methodName, checkOrder(array));
             GenerateBigArrayUtil.getSortFactory(methodName).sort(array);
             log.info("{}排序后是否有序{}", methodName, checkOrder(array));
