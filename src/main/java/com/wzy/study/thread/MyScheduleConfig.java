@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 /**
  * @author 王志英
  */
-@Configuration
-@EnableScheduling
+//@Configuration
+//@EnableScheduling
 public class MyScheduleConfig implements SchedulingConfigurer {
     @Override
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {

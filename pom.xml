@@ -37,6 +37,15 @@
             <artifactId>lombok</artifactId>
             <version>1.16.20</version>
         </dependency>
+
+        <!-- swagger-->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
+        <!-- 测试 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
