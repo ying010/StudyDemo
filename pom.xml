@@ -6,6 +6,7 @@
     <modules>
         <module>spring-cycle-depend</module>
         <module>simple-java-program</module>
+        <module>spring-boot-demo</module>
     </modules>
 
     <parent>
