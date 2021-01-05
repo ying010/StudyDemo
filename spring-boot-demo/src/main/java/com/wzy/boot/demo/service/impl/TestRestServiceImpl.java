@@ -23,7 +23,7 @@ public class TestRestServiceImpl implements ITestRestService {
 
     @Override
     public String testApi() {
-        PageHelper.startPage(1, 10);
+        PageHelper.startPage(1, 11);
         List<Map> mapList = testMapper.selectSalesOrderList();
         PageInfo pageInfo = new PageInfo(mapList);
         return JSON.toJSONString(pageInfo);
