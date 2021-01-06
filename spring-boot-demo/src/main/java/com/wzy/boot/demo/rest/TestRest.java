@@ -22,4 +22,9 @@ public class TestRest {
     public String testApi(@PathVariable String id) {
         return testRestService.testApi();
     }
+
+    @GetMapping("/test2/{id}")
+    public String testApi2(@PathVariable String id) {
+        return testRestService.testApi2();
+    }
 }

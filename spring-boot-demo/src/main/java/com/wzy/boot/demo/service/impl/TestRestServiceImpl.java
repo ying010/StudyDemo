@@ -1,6 +1,7 @@
 package com.wzy.boot.demo.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wzy.boot.demo.mapper.TestMapper;
@@ -24,6 +25,14 @@ public class TestRestServiceImpl implements ITestRestService {
     @Override
     public String testApi() {
         PageHelper.startPage(1, 11);
+//        List<Map> mapList = testMapper.selectSalesOrderList();
+//        PageInfo pageInfo = new PageInfo(mapList);
+        return JSON.toJSONString(new ThreadLocal<String>().get());
+    }
+
+    @Override
+    public String testApi2() {
+        log.info(JSON.toJSONString(new ThreadLocal<Page>().get()));
         List<Map> mapList = testMapper.selectSalesOrderList();
         PageInfo pageInfo = new PageInfo(mapList);
         return JSON.toJSONString(pageInfo);

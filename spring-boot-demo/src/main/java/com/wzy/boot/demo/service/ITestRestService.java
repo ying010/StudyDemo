@@ -6,4 +6,6 @@ package com.wzy.boot.demo.service;
 public interface ITestRestService {
 
     String testApi();
+
+    String testApi2();
 }
