@@ -7,5 +7,7 @@ public interface ITestRestService {
 
     String testApi();
 
-    String testApi2();
+    String testApi2(Integer id);
+
+    String testApi3(Integer id);
 }

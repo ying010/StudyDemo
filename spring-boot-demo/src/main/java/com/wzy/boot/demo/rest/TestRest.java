@@ -24,7 +24,12 @@ public class TestRest {
     }
 
     @GetMapping("/test2/{id}")
-    public String testApi2(@PathVariable String id) {
-        return testRestService.testApi2();
+    public String testApi2(@PathVariable Integer id) {
+        return testRestService.testApi2(id);
+    }
+
+    @GetMapping("/test3/{id}")
+    public String testApi3(@PathVariable Integer id) {
+        return testRestService.testApi3(id);
     }
 }

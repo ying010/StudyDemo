@@ -1,7 +1,6 @@
 package com.wzy.boot.demo.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wzy.boot.demo.mapper.TestMapper;
@@ -25,16 +24,25 @@ public class TestRestServiceImpl implements ITestRestService {
     @Override
     public String testApi() {
         PageHelper.startPage(1, 11);
-//        List<Map> mapList = testMapper.selectSalesOrderList();
-//        PageInfo pageInfo = new PageInfo(mapList);
-        return JSON.toJSONString(new ThreadLocal<String>().get());
+        log.info("test1-->" + PageHelper.getLocalPage());
+        List<Map> mapList = testMapper.selectSalesOrderList();
+        log.info("test1-->" + PageHelper.getLocalPage());
+        PageInfo pageInfo = new PageInfo(mapList);
+        return JSON.toJSONString(pageInfo);
     }
 
     @Override
-    public String testApi2() {
-        log.info(JSON.toJSONString(new ThreadLocal<Page>().get()));
+    public String testApi2(Integer id) {
+        PageHelper.startPage(1, 11);
+        log.info("test2-->" + PageHelper.getLocalPage());
+        return JSON.toJSONString(PageHelper.getLocalPage());
+    }
+
+    @Override
+    public String testApi3(Integer id) {
+        log.info("test3-->" + PageHelper.getLocalPage());
         List<Map> mapList = testMapper.selectSalesOrderList();
-        PageInfo pageInfo = new PageInfo(mapList);
-        return JSON.toJSONString(pageInfo);
+        log.info("test3-->" + PageHelper.getLocalPage());
+        return JSON.toJSONString(JSON.toJSONString(mapList));
     }
 }

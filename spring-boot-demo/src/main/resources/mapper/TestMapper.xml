@@ -6,4 +6,8 @@
         select * from mambike_dealer.t_sales_order
     </select>
 
+    <select id="selectSalesOrderList2" resultType="map">
+        select * from mambike_dealer.t_sales_order where #{id} > id
+    </select>
+
 </mapper>
