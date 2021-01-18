@@ -1,6 +1,5 @@
 package com.wzy.boot.demo.rest;
 
-import com.alibaba.fastjson.JSON;
 import com.wzy.boot.demo.service.ITestRestService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,5 +21,15 @@ public class TestRest {
     @GetMapping("/test/{id}")
     public String testApi(@PathVariable String id) {
         return testRestService.testApi();
+    }
+
+    @GetMapping("/test2/{id}")
+    public String testApi2(@PathVariable Integer id) {
+        return testRestService.testApi2(id);
+    }
+
+    @GetMapping("/test3/{id}")
+    public String testApi3(@PathVariable Integer id) {
+        return testRestService.testApi3(id);
     }
 }

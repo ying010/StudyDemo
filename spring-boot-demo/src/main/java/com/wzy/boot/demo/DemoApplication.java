@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 /**
  * @author 王志英
  */
-@SpringBootApplication(scanBasePackages = "com.wzy.boot.demo.*")
+@SpringBootApplication
 @MapperScan(basePackages = "com.wzy.boot.demo.mapper")
 public class DemoApplication {
 

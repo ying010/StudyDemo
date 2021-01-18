@@ -23,9 +23,26 @@ public class TestRestServiceImpl implements ITestRestService {
 
     @Override
     public String testApi() {
-        PageHelper.startPage(1, 10);
+        PageHelper.startPage(1, 11);
+        log.info("test1-->" + PageHelper.getLocalPage());
         List<Map> mapList = testMapper.selectSalesOrderList();
+        log.info("test1-->" + PageHelper.getLocalPage());
         PageInfo pageInfo = new PageInfo(mapList);
         return JSON.toJSONString(mapList);
+    }
+
+    @Override
+    public String testApi2(Integer id) {
+        PageHelper.startPage(1, 11);
+        log.info("test2-->" + PageHelper.getLocalPage());
+        return JSON.toJSONString(PageHelper.getLocalPage());
+    }
+
+    @Override
+    public String testApi3(Integer id) {
+        log.info("test3-->" + PageHelper.getLocalPage());
+        List<Map> mapList = testMapper.selectSalesOrderList();
+        log.info("test3-->" + PageHelper.getLocalPage());
+        return JSON.toJSONString(JSON.toJSONString(mapList));
     }
 }
