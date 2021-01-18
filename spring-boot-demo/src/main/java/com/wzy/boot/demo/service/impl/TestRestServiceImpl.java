@@ -26,6 +26,6 @@ public class TestRestServiceImpl implements ITestRestService {
         PageHelper.startPage(1, 10);
         List<Map> mapList = testMapper.selectSalesOrderList();
         PageInfo pageInfo = new PageInfo(mapList);
-        return JSON.toJSONString(pageInfo);
+        return JSON.toJSONString(mapList);
     }
 }
